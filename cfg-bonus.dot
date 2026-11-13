@@ -1,0 +1,47 @@
+digraph bonus_cfg {
+  graph [rankdir=TB, fontname="Helvetica", fontsize=16, nodesep=0.35, ranksep=0.35, splines=true, newrank=true,
+         label="CFG - DataFlowTargets.bonus()  (F.CSA313 Lab 10) - node = file line number, edge = JUnit tests that traverse it", labelloc=t];
+  node [fontname="Helvetica", fontsize=11, style=filled];
+  edge [fontname="Courier", fontsize=9];
+  N31 [label="31: bonus(attendance, threshold)\ndef attendance, threshold", shape=box, fillcolor="#dbe8fb"];
+  N32a [label="32: attendance == null\np-use attendance", shape=diamond, fillcolor="#fff2cc"];
+  N32b [label="32: threshold < 0\np-use threshold", shape=diamond, fillcolor="#fff2cc"];
+  N33 [label="33: throw IllegalArgumentException", shape=box, fillcolor="#f8cecc"];
+  N35 [label="35-37: present = 0; streak = 0; best = 0\ndef present, streak, best", shape=box, fillcolor="#ffffff"];
+  N38 [label="38: for (int a : attendance)\nnext element?  (p-use attendance)", shape=diamond, fillcolor="#fff2cc"];
+  N38a [label="38: a = next element\ndef a", shape=box, fillcolor="#ffffff"];
+  N39 [label="39: a > 0\np-use a", shape=diamond, fillcolor="#fff2cc"];
+  N40 [label="40: present = present + 1\n41: streak = streak + 1\nc-use/def present, streak", shape=box, fillcolor="#ffffff"];
+  N42 [label="42: streak > best\np-use streak, best", shape=diamond, fillcolor="#fff2cc"];
+  N43 [label="43: best = streak\nc-use streak, def best", shape=box, fillcolor="#ffffff"];
+  N46 [label="46: streak = 0\ndef streak  (KILLS streak@36, streak@41)", shape=box, fillcolor="#fce4d6"];
+  N49 [label="49: score = 0\ndef score", shape=box, fillcolor="#ffffff"];
+  N50 [label="50: present >= threshold\np-use present, threshold", shape=diamond, fillcolor="#fff2cc"];
+  N51 [label="51: score = 5\ndef score  (KILLS score@49)", shape=box, fillcolor="#fce4d6"];
+  N53 [label="53: best >= 5\np-use best", shape=diamond, fillcolor="#fff2cc"];
+  N54 [label="54: score = score + 3\nc-use/def score", shape=box, fillcolor="#ffffff"];
+  N56 [label="56: return score\nc-use score", shape=box, fillcolor="#d5e8d4"];
+  N31 -> N32a [label="b1_mixed_thr6_is8\nb2_single_thr5_is0\nb3_null_throws\nb4_negThr_throws\nb5_allAbsent_thr0_is5\nb6_empty_thr1_is0\nb7_streak5_thr10_is3\nb8_absentBeforeRecord_thr10_is0"];
+  N32a -> N32b [label="F\nb1_mixed_thr6_is8\nb2_single_thr5_is0\nb4_negThr_throws\nb5_allAbsent_thr0_is5\nb6_empty_thr1_is0\nb7_streak5_thr10_is3\nb8_absentBeforeRecord_thr10_is0"];
+  N32a -> N33 [label="T\nb3_null_throws"];
+  N32b -> N33 [label="T\nb4_negThr_throws"];
+  N32b -> N35 [label="F\nb1_mixed_thr6_is8\nb2_single_thr5_is0\nb5_allAbsent_thr0_is5\nb6_empty_thr1_is0\nb7_streak5_thr10_is3\nb8_absentBeforeRecord_thr10_is0"];
+  N35 -> N38 [label="b1_mixed_thr6_is8\nb2_single_thr5_is0\nb5_allAbsent_thr0_is5\nb6_empty_thr1_is0\nb7_streak5_thr10_is3\nb8_absentBeforeRecord_thr10_is0"];
+  N38 -> N38a [label="T\nb1_mixed_thr6_is8\nb2_single_thr5_is0\nb5_allAbsent_thr0_is5\nb7_streak5_thr10_is3\nb8_absentBeforeRecord_thr10_is0"];
+  N38 -> N49 [label="F\nb1_mixed_thr6_is8\nb2_single_thr5_is0\nb5_allAbsent_thr0_is5\nb6_empty_thr1_is0\nb7_streak5_thr10_is3\nb8_absentBeforeRecord_thr10_is0"];
+  N38a -> N39 [label="b1_mixed_thr6_is8\nb2_single_thr5_is0\nb5_allAbsent_thr0_is5\nb7_streak5_thr10_is3\nb8_absentBeforeRecord_thr10_is0"];
+  N39 -> N40 [label="T\nb1_mixed_thr6_is8\nb2_single_thr5_is0\nb7_streak5_thr10_is3\nb8_absentBeforeRecord_thr10_is0"];
+  N39 -> N46 [label="F\nb1_mixed_thr6_is8\nb5_allAbsent_thr0_is5\nb8_absentBeforeRecord_thr10_is0"];
+  N40 -> N42 [label="b1_mixed_thr6_is8\nb2_single_thr5_is0\nb7_streak5_thr10_is3\nb8_absentBeforeRecord_thr10_is0"];
+  N42 -> N38 [label="F\nb1_mixed_thr6_is8\nb8_absentBeforeRecord_thr10_is0"];
+  N42 -> N43 [label="T\nb1_mixed_thr6_is8\nb2_single_thr5_is0\nb7_streak5_thr10_is3\nb8_absentBeforeRecord_thr10_is0"];
+  N43 -> N38 [label="b1_mixed_thr6_is8\nb2_single_thr5_is0\nb7_streak5_thr10_is3\nb8_absentBeforeRecord_thr10_is0"];
+  N46 -> N38 [label="b1_mixed_thr6_is8\nb5_allAbsent_thr0_is5\nb8_absentBeforeRecord_thr10_is0"];
+  N49 -> N50 [label="b1_mixed_thr6_is8\nb2_single_thr5_is0\nb5_allAbsent_thr0_is5\nb6_empty_thr1_is0\nb7_streak5_thr10_is3\nb8_absentBeforeRecord_thr10_is0"];
+  N50 -> N51 [label="T\nb1_mixed_thr6_is8\nb5_allAbsent_thr0_is5"];
+  N50 -> N53 [label="F\nb2_single_thr5_is0\nb6_empty_thr1_is0\nb7_streak5_thr10_is3\nb8_absentBeforeRecord_thr10_is0"];
+  N51 -> N53 [label="b1_mixed_thr6_is8\nb5_allAbsent_thr0_is5"];
+  N53 -> N54 [label="T\nb1_mixed_thr6_is8\nb7_streak5_thr10_is3"];
+  N53 -> N56 [label="F\nb2_single_thr5_is0\nb5_allAbsent_thr0_is5\nb6_empty_thr1_is0\nb8_absentBeforeRecord_thr10_is0"];
+  N54 -> N56 [label="b1_mixed_thr6_is8\nb7_streak5_thr10_is3"];
+}
