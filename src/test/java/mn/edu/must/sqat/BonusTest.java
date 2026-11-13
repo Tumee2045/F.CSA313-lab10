@@ -63,4 +63,17 @@ class BonusTest {
     void b7_streak5_thr10_is3() {
         assertEquals(3, DataFlowTargets.bonus(new int[] {1, 1, 1, 1, 1}, 10));
     }
+
+    // ---------------------------------------------------------------
+    // Хэсэг C — M2 ("best = streak" -> "best = present")-ийг унагах тест.
+    // b1..b7-д best шинэчлэгдэх мөч бүрд present == streak байсан (тасалсан өдөр
+    // рекорд цувааны ДАРАА л байсан) тул M2 амьд үлдсэн. Энд тасалсан өдөр рекордоос
+    // ӨМНӨ байна: бодит best = 4 (< 5), мутант best = present = 5 -> +3 болно.
+    // ---------------------------------------------------------------
+
+    @Test
+    @DisplayName("B8 [1,0,1,1,1,1] thr=10 -> 0: best(43->53F) with present != streak - kills M2")
+    void b8_absentBeforeRecord_thr10_is0() {
+        assertEquals(0, DataFlowTargets.bonus(new int[] {1, 0, 1, 1, 1, 1}, 10));
+    }
 }
